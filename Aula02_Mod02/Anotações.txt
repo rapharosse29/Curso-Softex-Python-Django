@@ -1,0 +1,4 @@
+Tupla => ()
+Conjunto => {}
+Dicionario => []
+
