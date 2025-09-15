@@ -239,7 +239,7 @@ def iniciar_programa():
                 bairro, valor_frete = calcular_frete(bairros_disponiveis)
                 print(f"Valor do frete para o bairro {bairros_disponiveis['bairro']['nome']} é de R$ {valor_frete:.2f}")
 
-            elif forma_retirada != 1:
+            elif forma_retirada != '1':
                 print("Opção inválida!")
                 continue
 
