@@ -18,7 +18,7 @@ alunos_menor_nota = set()
 nota_inicial = 0
 
 for aluno, nota in notas:
-    if nota >= nota_inical:
+    if nota >= nota_inicial:
         nota.add(maior_nota)
     else:
         nota_inicial += nota_inicial
