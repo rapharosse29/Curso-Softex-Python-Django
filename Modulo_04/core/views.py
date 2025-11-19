@@ -12,11 +12,11 @@ from .forms import TarefaForm
 def home(request):
     if request.method == 'POST':
         form = TarefaForm(request.POST)
-    if form.is_valid():
-        tarefa = form.save(commit=False)
-        tarefa.user = request.user
-        tarefa.save()
-        return redirect('home')
+        if form.is_valid():
+            tarefa = form.save(commit=False)
+            tarefa.user = request.user
+            tarefa.save()
+            return redirect('home')
     else:
         form = TarefaForm()
 
@@ -49,10 +49,10 @@ def deletar_tarefa(request, pk):
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-    if form.is_valid():
-        user = form.save()
-        login(request, user)
-        return redirect('home')
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
     else:
         form = UserCreationForm()
         
