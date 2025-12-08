@@ -2,18 +2,46 @@ from rest_framework import serializers
 from .models import Tarefa 
  
 class TarefaSerializer(serializers.ModelSerializer): 
-    """ 
-    Serializer para o Model Tarefa. 
-     
-    Responsabilidades: 
-    1. Converter Tarefa → JSON (serialização) 
-    2. Converter JSON → Tarefa (desserialização) 
-    3. Validar dados de entrada 
-    """ 
+    Titulo = serializers.CharField(
+        max_length=200,
+        error_messages={
+            'required': 'O título é obrigatório.',
+            'blank': 'O título não pode estar vazio.',
+            'max_length': 'O título não pode exceder 200 caracteres.'
+        }
+    )
      
     class Meta: 
         model = Tarefa 
-        fields = ['id', 'user', 'titulo', 'concluida', 'criada_em', 'descricao'] 
-         
-        # Campos gerados automaticamente (não aceitos na entrada) 
-        read_only_fields = ['id', 'criada_em'] 
+        fields = ['id', 'user', 'titulo', 'concluida', 'criada_em', 'descricao']
+        read_only_fields = ['id', 'criada_em']
+        titulo = serializers
+
+
+        def validate_titulo(self, value):
+            """
+            Validação customizada para o campo 'titulo'.
+            Regras:
+            - Não pode ser vazio (após strip)
+            - Não pode conter apenas números
+            - Deve ter pelo menos 3 caracteres
+            """
+            # Remover espaços em branco
+            value = value.strip()
+            # Validação 1: Não vazio
+            if not value:
+                raise serializers.ValidationError(
+                    "O título não pode ser vazio ou conter apenas espaços."
+                )
+            # Validação 2: Mínimo de caracteres
+            if len(value) < 3:
+                raise serializers.ValidationError(
+                    "O título deve ter pelo menos 3 caracteres."
+                )
+            # Validação 3: Não apenas números
+            if value.isdigit():
+                raise serializers.ValidationError(
+                    "O título não pode conter apenas números."
+                )
+                            
+            return value
